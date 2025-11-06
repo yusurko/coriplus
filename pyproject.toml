@@ -1,0 +1,21 @@
+[project]
+name = "sakuragasaki46_coriplus"
+authors = [
+    { name = "Sakuragasaki46" }
+]
+dynamic = ["version"]
+dependencies = [
+    "Python-Dotenv>=1.0.0",
+    "Flask",
+    "Flask-Login",
+    "Peewee"
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Private :: X"
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "coriplus.__version__" }
+
+

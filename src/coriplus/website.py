@@ -9,6 +9,9 @@ from sys import version as python_version
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for, __version__ as flask_version
 from flask_login import login_required, login_user, logout_user
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 bp = Blueprint('website', __name__)
 
@@ -181,7 +184,7 @@ def create():
             privacy=privacy)
         file = request.files.get('file')
         if file:
-            print('Uploading', file.filename)
+            logger.info('Uploading', file.filename)
             ext = file.filename.split('.')[-1]
             upload = Upload.create(
                 type=ext,

@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.9-dev
+## 0.10.0
++ Codebase refactor (with breaking changes!)
++ Move ALL config to .env (config.py is NO MORE supported)
++ Config SITE_NAME replaced with APP_NAME
+
+## 0.9.0
 
 * Website redesign: added some material icons, implemented via a `inline_svg` function, injected by default in templates and defined in `utils.py`.
 * Added positive feedback mechanism: now you can +1 a message. So, `score_message_add` and `score_message_remove` API endpoints were added, and `MessageUpvote` table was created.
@@ -26,7 +31,7 @@
 * Changed default `robots.txt`, adding report and admin-related lines.
 * Released official [Android client](https://github.com/sakuragasaki46/coriplusapp/releases/tag/v0.8.0).
 
-## 0.7.1-dev
+## 0.7.1
 
 * Adding `messages_count`, `followers_count` and `following_count` to `profile_info` API endpoint (forgot to release).
 

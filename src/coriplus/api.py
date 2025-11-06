@@ -7,6 +7,9 @@ from .models import User, UserProfile, Message, Upload, Relationship, Notificati
     MSGPRV_PUBLIC, MSGPRV_UNLISTED, MSGPRV_FRIENDS, MSGPRV_ONLYME, UPLOAD_DIRECTORY
 from .utils import check_access_token, Visibility, push_notification, unpush_notification, \
     create_mentions, is_username, generate_access_token, pwdhash
+import logging
+
+logger = logging.getLogger(__name__)
 
 bp = Blueprint('api', __name__, url_prefix='/api/V1')
 
@@ -16,7 +19,7 @@ def get_message_info(message):
     except IndexError:
         media = None
     if media:
-        print(media)
+        logger.debug(media)
     return {
         'id': message.id,
         'user': {
@@ -122,7 +125,7 @@ def create2(self):
         privacy=privacy)
     file = request.files.get('file')
     if file:
-        print('Uploading', file.filename)
+        logger.info('Uploading', file.filename)
         ext = file.filename.split('.')[-1]
         upload = Upload.create(
             type=ext,

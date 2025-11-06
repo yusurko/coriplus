@@ -16,24 +16,31 @@ For other, see `app.utils`.
 '''
 
 from flask import (
-    Flask, abort, flash, g, jsonify, redirect, render_template, request,
-    send_from_directory, session, url_for, __version__ as flask_version)
-import hashlib
-import datetime, time, re, os, sys, string, json, html
-from functools import wraps
+    Flask, g, jsonify, render_template, request,
+    send_from_directory, __version__ as flask_version)
+import os, sys
 from flask_login import LoginManager
+import dotenv
+import logging
 
-__version__ = '0.9.0'
+__version__ = '0.10.0-dev44'
 
-# we want to support Python 3 only.
+# we want to support Python 3.10+ only.
 # Python 2 has too many caveats.
-if sys.version_info[0] < 3:
-    raise RuntimeError('Python 3 required')
+# Python <=3.9 has harder type support.
+if sys.version_info[0:2] < (3, 10):
+    raise RuntimeError('Python 3.10+ required')
 
-os.chdir(os.path.dirname(os.path.dirname(__file__)))
+BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+os.chdir(BASEDIR)
+
+dotenv.load_dotenv()
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-app.config.from_pyfile('../config.py')
+app.secret_key = os.environ['SECRET_KEY']
 
 login_manager = LoginManager(app)
 
@@ -53,7 +60,7 @@ def before_request():
     try:
         g.db.connect()
     except OperationalError:
-        sys.stderr.write('database connected twice.\n')
+        logger.error('database connected twice.\n')
 
 @app.after_request
 def after_request(response):
@@ -63,7 +70,7 @@ def after_request(response):
 @app.context_processor
 def _inject_variables():
     return {
-        'site_name': app.config['SITE_NAME'],
+        'site_name': os.environ.get('APP_NAME', 'Cori+'),
         'locations': locations,
         'inline_svg': inline_svg
     }
@@ -78,11 +85,11 @@ def error_404(body):
     
 @app.route('/favicon.ico')
 def favicon_ico():
-    return send_from_directory(os.getcwd(), 'favicon.ico')
+    return send_from_directory(BASEDIR, 'src/favicon.ico')
 
 @app.route('/robots.txt')
 def robots_txt():
-    return send_from_directory(os.getcwd(), 'robots.txt')
+    return send_from_directory(BASEDIR, 'src/robots.txt')
 
 @app.route('/uploads/<id>.<type>')
 def uploads(id, type='jpg'):
