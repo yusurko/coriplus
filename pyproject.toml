@@ -10,7 +10,8 @@ dependencies = [
     "Flask-Login",
     "Peewee",
     "Flask-WTF",
-    "peewee-migrate"
+    "peewee-migrate",
+    "PsycoPG2"
 ]
 requires-python = ">=3.10"
 classifiers = [

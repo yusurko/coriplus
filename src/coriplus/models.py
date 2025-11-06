@@ -15,6 +15,8 @@ from flask import request
 from peewee import *
 from playhouse.db_url import connect
 import os
+
+from . import BASEDIR
 # here should go `from .utils import get_current_user`, but it will cause
 # import errors. It's instead imported at function level.
 
@@ -190,7 +192,7 @@ class Relationship(BaseModel):
         )
 
 
-UPLOAD_DIRECTORY = os.path.join(os.path.split(os.path.dirname(__file__))[0], 'uploads')
+UPLOAD_DIRECTORY = os.path.join(BASEDIR, 'uploads')
 
 class Upload(BaseModel):
     # the extension of the media
