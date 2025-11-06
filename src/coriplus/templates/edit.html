@@ -2,6 +2,7 @@
 {% block body %}
   <h2>Edit</h2>
   <form action="{{ url_for('website.edit', id=message.id) }}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <dl>
       <dt>Message:</dt>
       <dd><textarea name="text" required="" class="create_text">{{ message.text }}</textarea></dd>

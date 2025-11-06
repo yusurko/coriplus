@@ -4,6 +4,7 @@
 + Codebase refactor (with breaking changes!)
 + Move ALL config to .env (config.py is NO MORE supported)
 + Config SITE_NAME replaced with APP_NAME
++ Add CSRF token and flask_WTF
 
 ## 0.9.0
 

@@ -3,6 +3,7 @@
   <h2>Login</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <dl>
       <dt>Username or email:
       <dd><input type="text" name="username">

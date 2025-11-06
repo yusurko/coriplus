@@ -8,7 +8,9 @@ dependencies = [
     "Python-Dotenv>=1.0.0",
     "Flask",
     "Flask-Login",
-    "Peewee"
+    "Peewee",
+    "Flask-WTF",
+    "peewee-migrate"
 ]
 requires-python = ">=3.10"
 classifiers = [

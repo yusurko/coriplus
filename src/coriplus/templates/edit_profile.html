@@ -4,6 +4,7 @@
 <h2>Edit Profile</h2>
 
 <form method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
   <dl>
     <dt>Username:</dt>
     <dd><input type="text" class="username-input" name="username" required value="{{ current_user.username }}" autocomplete="off"></dd>

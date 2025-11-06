@@ -13,11 +13,12 @@ The tables are:
 
 from flask import request
 from peewee import *
+from playhouse.db_url import connect
 import os
 # here should go `from .utils import get_current_user`, but it will cause
 # import errors. It's instead imported at function level.
 
-database = SqliteDatabase('coriplus.sqlite')
+database = connect(os.environ['DATABASE_URL'])
 
 class BaseModel(Model):
     class Meta:

@@ -3,6 +3,7 @@
 {% block body %}
   {% for reason in report_reasons %}
     <form method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <div class="item" onclick="submitReport({{ reason[0] }})">
         <h2>{{ reason[1] }}</h2>
       </div>

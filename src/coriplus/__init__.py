@@ -20,6 +20,7 @@ from flask import (
     send_from_directory, __version__ as flask_version)
 import os, sys
 from flask_login import LoginManager
+from flask_wtf import CSRFProtect
 import dotenv
 import logging
 
@@ -44,6 +45,8 @@ app.secret_key = os.environ['SECRET_KEY']
 
 login_manager = LoginManager(app)
 
+CSRFProtect(app)
+
 from .models import *
 
 from .utils import *
@@ -64,7 +67,10 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    g.db.close()
+    try:
+        g.db.close()
+    except Exception:
+        logger.error('database closed twice')
     return response
 
 @app.context_processor

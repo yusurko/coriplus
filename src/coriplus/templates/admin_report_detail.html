@@ -21,6 +21,7 @@
     {% include "includes/reported_message.html" %}
   {% endif %}
   <form method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <input type="submit" name="take_down" value="Take down">
     <input type="submit" name="discard" value="Discard">
   </form>
