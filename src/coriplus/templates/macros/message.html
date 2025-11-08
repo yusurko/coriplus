@@ -1,0 +1,35 @@
+{% macro feed_message(message) %}
+<li class="card" id="{{ message.id }}">
+<p class="message-content">{{ message.text|enrich }}</p>
+{% if message.uploads %}
+<div class="message-visual">
+  <img src="/uploads/{{ message.uploads[0].filename() }}">
+</div>
+{% endif %}
+<p class="message-footer">
+  <a href="javascript:void(0);" class="message-upvote" onclick="toggleUpvote({{ message.id }});">+</a>
+  <span class="message-score">{{ message.score }}</span>
+  - 
+  <a href="{{ url_for('website.user_detail', username=message.user.username) }}">{{ message.user.username }}</a> 
+  - 
+  {% set message_privacy = message.privacy %}
+  {% if message_privacy == 0 %} Public
+  {% elif message_privacy == 1 %} Unlisted
+  {% elif message_privacy == 2 %} Friends
+  {% elif message_privacy == 3 %} Only me
+  {% endif %}
+  -
+  <time datetime="{{ message.pub_date.isoformat() }}" title="{{ message.pub_date.ctime() }}">{{ message.pub_date | human_date }}</time>
+  -
+  <a href="javascript:void(0);" onclick="showHideMessageOptions({{ message.id }});" class="message-options-showhide"></a>
+</p>
+<ul class="message-options">
+  {% if message.user == current_user %}
+  <li><a href="/edit/{{ message.id }}">Edit or change privacy</a></li>
+  <li><a href="/delete/{{ message.id }}">Delete permanently</a></li>
+  {% else %}
+  <li><a href="/report/message/{{ message.id }}" target="_blank">Report</a></li>
+  {% endif %}
+</ul>
+</li>
+{% endmacro %}

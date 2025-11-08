@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h2>Confirm Deletion</h2>
+<div class="card">
+  <h2>Confirm Deletion</h2>
 
-<p>Are you sure you want to <u>permanently delete</u> this post? 
-   Neither you nor others will be able to see it;
-   you cannot recover a post after it's deleted.</p>
+  <p>Are you sure you want to <u>permanently delete</u> this post? 
+    Neither you nor others will be able to see it;
+    you cannot recover a post after it's deleted.</p>
 
-<p><small>Tip: If you only want to hide it from the public, 
-   you can <a href="/edit/{{ message.id }}">set its privacy</a> to "Only me".</small></p>
+  <p><small>Tip: If you only want to hide it from the public, 
+    you can <a href="/edit/{{ message.id }}">set its privacy</a> to "Only me".</small></p>
 
-<ul>
-  <li>{% include "includes/message.html" %}</li>
-</ul>
+  <ul>
+    <li>{% include "includes/message.html" %}</li>
+  </ul>
 
-<form method="POST">
-<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <input type="submit" value="Delete">
-</form>
+  <form method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input type="submit" value="Delete">
+  </form>
+</div>
 {% endblock %}

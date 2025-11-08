@@ -16,10 +16,19 @@ This is the server. For the client, see [coriplusapp](https://github.com/sakurag
 * Add info to your profile
 * In-site notifications
 * Public API
-* SQLite-based app
+* SQLite (or PostgreSQL)-based app
 
 ## Requirements
 
-* **Python 3** only. We don't want to support Python 2.
-* **Flask** web framework (also required extension **Flask-Login**).
+* **Python 3.10+** with **pip**.
+* **Flask** web framework.
 * **Peewee** ORM.
+* A \*nix-based OS.
+
+## Installation
+
+* Install dependencies: `pip install .`
+* Set the `DATABASE_URL` (must be SQLite or PostgreSQL)
+* Run the migrations: `sh ./genmig.sh @`
+* i forgor
+

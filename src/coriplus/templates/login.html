@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
   <h2>Login</h2>
-  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}</p>{% endif %}
+<div class="card">
   <form method="POST">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <dl>
       <dt>Username or email:
       <dd><input type="text" name="username">
@@ -19,4 +20,5 @@
       <dd><input type="submit" value="Login">
     </dl>
   </form>
+</div>
 {% endblock %}

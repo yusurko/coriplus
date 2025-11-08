@@ -218,12 +218,6 @@ def create_mentions(cur_user, text, privacy):
             pass
 
 # New in 0.9
-def inline_svg(name, width=None):
-    try:
-        with open('icons/' + name + '-24px.svg') as f:
-            data = f.read()
-            if isinstance(width, int):
-                data = re.sub(r'( (?:height|width)=")\d+(")', lambda x:x.group(1) + str(width) + x.group(2), data)
-            return Markup(data)
-    except OSError:
-        return ''
+# changed in 0.10
+def inline_svg(name):
+    return Markup('<span class="material-icons">{}</span>').format(name)

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% from "macros/message.html" import feed_message with context %}
 {% block body %}
   <h2>Your Timeline</h2>
   <ul class="timeline">
     {% for message in message_list %}
-      <li id="{{ message.id }}">{% include "includes/message.html" %}</li>
+      {{ feed_message(message) }}
     {% endfor %}
   </ul>
   {% include "includes/pagination.html" %}

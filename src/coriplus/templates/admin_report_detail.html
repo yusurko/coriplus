@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 
 {% block body %}
-  <h2>Report detail #{{ report.id }}</h2>
+<h2>Report detail #{{ report.id }}</h2>
+<div class="card">
   <p>Type: {{ [None, 'user', 'message'][report.media_type] }}</p>
   <p>Reason: <strong>{{ report_reasons[report.reason] }}</strong></p>
   <p>Status: <strong>{{ ['Unreviewed', 'Accepted', 'Declined'][report.status] }}</strong></p>
@@ -25,4 +26,5 @@
     <input type="submit" name="take_down" value="Take down">
     <input type="submit" name="discard" value="Discard">
   </form>
+</div>
 {% endblock %}

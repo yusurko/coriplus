@@ -4,7 +4,8 @@ Management of reports and the entire site.
 New in 0.8.
 '''
 
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, abort, redirect, render_template, request, url_for
+from flask_login import current_user
 from .models import User, Message, Report, report_reasons, REPORT_STATUS_ACCEPTED, \
     REPORT_MEDIA_USER, REPORT_MEDIA_MESSAGE
 from .utils import pwdhash, object_list
@@ -12,21 +13,18 @@ from functools import wraps
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
-def check_auth(username, password):
+def _check_auth(username, password) -> bool:
     try:
-        return User.get((User.username == username) & (User.password == pwdhash(password))
-            ).is_admin
+        return User.select().where((User.username == username) & (User.password == pwdhash(password)) & (User.is_admin)
+            ).exists()
     except User.DoesNotExist:
         return False
 
 def admin_required(f):
     @wraps(f)
     def wrapped_view(**kwargs):
-        auth = request.authorization
-        if not (auth and check_auth(auth.username, auth.password)):
-            return ('Unauthorized', 401, {
-                'WWW-Authenticate': 'Basic realm="Login Required"'
-            })
+        if not _check_auth(current_user.username, current_user.password):
+            abort(403)
         return f(**kwargs)
     return wrapped_view
 

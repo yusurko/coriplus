@@ -7,16 +7,19 @@
   </head>
   <body>
     <div class="header">
-      <h1><a href="{{ url_for('admin.homepage') }}">{{ site_name }} Admin</a></h1>
-      <div class="metanav">
+      <h1><a href="{{ url_for('admin.homepage') }}">{{ site_name }}: Admin</a></h1>
+      <div class="rightnav">
         <!-- what does it go here? -->
       </div>
     </div>
     <div class="content">
+      
       {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
       {% endfor %}
+      <main>
       {% block body %}{% endblock %}
+      </main>
     </div>
     <div class="footer">
       <p class="copyright">&copy; 2019 Sakuragasaki46. 

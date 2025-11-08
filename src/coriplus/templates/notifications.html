@@ -3,7 +3,7 @@
   <h2>Notifications</h2>
   <ul>
     {% for notification in notification_list %}
-      <li>{% include "includes/notification.html" %}</li>
+      <li class="card">{% include "includes/notification.html" %}</li>
     {% endfor %}
   </ul>
   {% include "includes/pagination.html" %}

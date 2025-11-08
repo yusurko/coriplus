@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
+<div class="card">
   <h2>Join {{ site_name }}</h2>
   <form action="{{ url_for('website.register') }}" method="POST">
     <dl>
@@ -32,4 +33,5 @@
       <dd><input type="submit" value="Join">
     </dl>
   </form>
+<div>
 {% endblock %}
