@@ -7,7 +7,7 @@ from .models import *
 from . import __version__ as app_version
 from sys import version as python_version
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for, __version__ as flask_version
-from flask_login import login_required, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 import json
 import logging
 
@@ -17,7 +17,7 @@ bp = Blueprint('website', __name__)
 
 @bp.route('/')
 def homepage():
-    if get_current_user():
+    if current_user and current_user.is_authenticated:
         return private_timeline()
     else:
         return render_template('homepage.html')
@@ -26,7 +26,7 @@ def private_timeline():
     # the private timeline (aka feed) exemplifies the use of a subquery -- we are asking for
     # messages where the person who created the message is someone the current
     # user is following.  these messages are then ordered newest-first.
-    user = get_current_user()
+    user = current_user
     messages = Visibility(Message
                 .select()
                 .where((Message.user << user.following())
@@ -83,6 +83,9 @@ def register():
 
 @bp.route('/login/', methods=['GET', 'POST'])
 def login():
+    if current_user and current_user.is_authenticated:
+        flash('You are already logged in')
+        return redirect(request.args.get('next', '/'))
     if request.method == 'POST' and request.form['username']:
         try:
             username = request.form['username']

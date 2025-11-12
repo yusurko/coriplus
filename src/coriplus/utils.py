@@ -3,6 +3,8 @@ A list of utilities used across modules.
 '''
 
 import datetime, re, base64, hashlib, string, sys, json
+
+from flask_login import current_user
 from .models import User, Message, Notification, MSGPRV_PUBLIC, MSGPRV_UNLISTED, \
     MSGPRV_FRIENDS, MSGPRV_ONLYME
 from flask import abort, render_template, request, session
@@ -102,15 +104,14 @@ except OSError:
 
 # get the user from the session
 # changed in 0.5 to comply with flask_login
+# DEPRECATED in 0.10; use current_user instead
 def get_current_user():
     # new in 0.7; need a different method to get current user id
     if request.path.startswith('/api/'):
         # assume token validation is already done
         return User[request.args['access_token'].split(':')[0]]
-    else:
-        user_id = session.get('user_id')
-        if user_id:
-           return User[user_id]
+    elif current_user.is_authenticated:
+        return current_user
 
 def push_notification(type, target, **kwargs):
     try:

@@ -1,26 +1,14 @@
 {% set profile = user.profile %}
-<div class="infobox">
+<div class="card infobox">
   <h3>{{ profile.full_name }}</h3>
   <p>{{ profile.biography|enrich }}</p>
   {% if profile.location %}
     <p><span class="weak">Location:</span> {{ profile.location|locationdata }}</p>
   {% endif %}
-  {% if profile.year %}
-    <p><span class="weak">Year:</span> {{ profile.year }}</p>
-  {% endif %}
   {% if profile.website %}
     {% set website = profile.website %}
     {% set website = website if website.startswith(('http://', 'https://')) else 'http://' + website %}
     <p><span class="weak">Website:</span> {{ profile.website|urlize }}</p>
-  {% endif %}
-  {% if profile.instagram %}
-    <p><span class="weak">Instagram:</span> <a href="https://www.instagram.com/{{ profile.instagram }}">{{ profile.instagram }}</a></p>
-  {% endif %}
-  {% if profile.facebook %}
-    <p><span class="weak">Facebook:</span> <a href="https://facebook.com/{{ profile.facebook }}">{{ profile.facebook }}</a></p>
-  {% endif %}
-  {% if profile.telegram %}
-    <p><span class="weak">Telegram:</span> <a href="https://t.me/{{ profile.facebook }}">{{ profile.telegram }}</a></p>
   {% endif %}
   <p>
     <strong>{{ user.messages|count }}</strong> messages
@@ -30,6 +18,6 @@
     <a href="{{ url_for('website.user_following', username=user.username) }}"><strong>{{ user.following()|count }}</strong></a> following
   </p>
   {% if user == current_user %}
-    <p><a href="/edit_profile/">{{ inline_svg('edit', 18) }} Edit profile</a></p>
+    <p><a href="/edit_profile/">{{ inline_svg('edit') }} Edit profile</a></p>
   {% endif %}
 </div>

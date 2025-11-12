@@ -24,7 +24,7 @@ from flask_wtf import CSRFProtect
 import dotenv
 import logging
 
-__version__ = '0.10.0-dev44'
+__version__ = '0.10.0-dev45'
 
 # we want to support Python 3.10+ only.
 # Python 2 has too many caveats.

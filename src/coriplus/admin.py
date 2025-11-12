@@ -13,17 +13,16 @@ from functools import wraps
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
-def _check_auth(username, password) -> bool:
+def _check_auth(username) -> bool:
     try:
-        return User.select().where((User.username == username) & (User.password == pwdhash(password)) & (User.is_admin)
-            ).exists()
+        return User.get((User.username == username)).is_admin
     except User.DoesNotExist:
         return False
 
 def admin_required(f):
     @wraps(f)
     def wrapped_view(**kwargs):
-        if not _check_auth(current_user.username, current_user.password):
+        if not _check_auth(current_user.username):
             abort(403)
         return f(**kwargs)
     return wrapped_view
