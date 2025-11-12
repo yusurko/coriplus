@@ -1,14 +1,11 @@
-{% set profile = user.profile %}
+
 <div class="card infobox">
-  <h3>{{ profile.full_name }}</h3>
-  <p>{{ profile.biography|enrich }}</p>
-  {% if profile.location %}
-    <p><span class="weak">Location:</span> {{ profile.location|locationdata }}</p>
-  {% endif %}
-  {% if profile.website %}
-    {% set website = profile.website %}
+  <h3>{{ user.full_name }}</h3>
+  <p>{{ user.biography|enrich }}</p>
+  {% if user.website %}
+    {% set website = user.website %}
     {% set website = website if website.startswith(('http://', 'https://')) else 'http://' + website %}
-    <p><span class="weak">Website:</span> {{ profile.website|urlize }}</p>
+    <p><span class="weak">Website:</span> {{ website|urlize }}</p>
   {% endif %}
   <p>
     <strong>{{ user.messages|count }}</strong> messages

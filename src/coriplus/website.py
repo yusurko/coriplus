@@ -137,11 +137,12 @@ def user_follow(username):
                 from_user=cur_user,
                 to_user=user,
                 created_date=datetime.datetime.now())
+            push_notification('follow', user, user=cur_user.id)
+        flash('You are now following %s' % user.username)
     except IntegrityError:
-        pass
+        flash(f'Error following {user.username}')
+    
 
-    flash('You are following %s' % user.username)
-    push_notification('follow', user, user=cur_user.id)
     return redirect(url_for('website.user_detail', username=user.username))
 
 @bp.route('/+<username>/unfollow/', methods=['POST'])

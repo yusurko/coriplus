@@ -29,19 +29,25 @@ class BaseModel(Model):
 # A user. The user is separated from its page.
 class User(BaseModel):
     # The unique username.
-    username = CharField(unique=True)
+    username = CharField(30, unique=True)
     # The user's full name (here for better search since 0.8)
-    full_name = TextField()
+    full_name = CharField(80)
     # The password hash.
-    password = CharField()
+    password = CharField(256)
     # An email address.
-    email = CharField()
+    email = CharField(256)
     # The date of birth (required because of Terms of Service)
     birthday = DateField()
     # The date joined
     join_date = DateTimeField()
     # A disabled flag. 0 = active, 1 = disabled by user, 2 = banned
     is_disabled = IntegerField(default=0)
+    # Short description of user.
+    biography = CharField(256, default='')
+    # Personal website.
+    website = TextField(null=True)
+    
+
 
     # Helpers for flask_login
     def get_id(self):
@@ -110,15 +116,12 @@ class UserAdminship(BaseModel):
 # User profile.
 # Additional info for identifying users.
 # New in 0.6
+# Deprecated in 0.10 and merged with User
 class UserProfile(BaseModel):
     user = ForeignKeyField(User, primary_key=True)
     biography = TextField(default='')
     location = IntegerField(null=True)
-    year = IntegerField(null=True)
     website = TextField(null=True)
-    instagram = TextField(null=True)
-    facebook = TextField(null=True)
-    telegram = TextField(null=True)
     @property
     def full_name(self):
         '''
