@@ -18,3 +18,4 @@ config/
 node_modules/
 alembic.ini
 **.egg-info
+.vscode

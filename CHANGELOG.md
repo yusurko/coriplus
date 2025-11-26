@@ -2,9 +2,12 @@
 
 ## 0.10.0
 + Codebase refactor (with breaking changes!)
++ Dropped support for Python<=3.9
 + Move ALL config to .env (config.py is NO MORE supported)
 + Config SITE_NAME replaced with APP_NAME
 + Add CSRF token and flask_WTF
++ Schema changes: biography and website moved to `User`; `UserProfile` table deprecated (and useless fields removed)
++ Posts can now be permanently deleted
 
 ## 0.9.0
 

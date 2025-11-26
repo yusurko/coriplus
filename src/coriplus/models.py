@@ -23,6 +23,8 @@ from . import BASEDIR
 database = connect(os.environ['DATABASE_URL'])
 
 class BaseModel(Model):
+    id = AutoField(primary_key=True)
+
     class Meta:
         database = database
 

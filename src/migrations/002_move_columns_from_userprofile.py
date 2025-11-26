@@ -70,6 +70,11 @@ def rollback(migrator: Migrator, database: pw.Database, *, fake=False):
         facebook=pw.TextField(null=True),
         telegram=pw.TextField(null=True))
 
+    migrator.sql("""
+    UPDATE "userprofile" SET biography = (SELECT p.biography FROM user p WHERE p.user_id = id LIMIT 1), 
+    website = (SELECT p.website FROM user p WHERE p.user_id = id LIMIT 1);
+    """)
+
     migrator.remove_fields('user', 'biography', 'website')
 
     migrator.change_fields('user', username=pw.CharField(max_length=255, unique=True))

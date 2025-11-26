@@ -239,12 +239,15 @@ def edit(id):
 
 @bp.route('/delete/<int:id>', methods=['GET', 'POST'])
 def confirm_delete(id):
-    user = get_current_user()
-    message = get_object_or_404(Message, Message.id == id)
+    user: User = current_user
+    message: Message  = get_object_or_404(Message, Message.id == id)
     if message.user != user:
         abort(404)
     if request.method == 'POST':
-        abort(501, 'CSRF-Token missing.')
+        if message.user == user:
+            message.delete_instance()
+            flash('Your message has been deleted forever')
+            return redirect(request.args.get('next', '/'))
     return render_template('confirm_delete.html', message=message)
 
 # Workaround for problems related to invalid data.
