@@ -99,12 +99,20 @@ function showHideMessageOptions(id){
   }
 }
 
+function getCsrfToken () {
+  var csrf_token = document.querySelector('meta[name="csrf_token"]');
+  return csrf_token?.getAttribute('content');
+}
+
 function toggleUpvote(id){
   var msgElem = document.getElementById(id);
-  var upvoteLink = msgElem.getElementsByClassName('message-upvote')[0];
+  //var upvoteLink = msgElem.getElementsByClassName('message-upvote')[0];
   var scoreCounter = msgElem.getElementsByClassName('message-score')[0];
+  var body = "csrf_token=" + getCsrfToken();
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/ajax/score/" + id + "/toggle", true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  // TODO add csrf token somewhere
   xhr.onreadystatechange = function(){
     if(xhr.readyState == XMLHttpRequest.DONE){
       if(xhr.status == 200){
@@ -114,5 +122,5 @@ function toggleUpvote(id){
       }
     }
   };
-  xhr.send();
+  xhr.send(body);
 }

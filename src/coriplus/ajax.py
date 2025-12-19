@@ -5,8 +5,9 @@ Warning: this is not the public API.
 '''
 
 from flask import Blueprint, jsonify
+from flask_login import current_user
 from .models import User, Message, MessageUpvote
-from .utils import locations, get_current_user, is_username
+from .utils import locations, is_username
 import datetime
 
 bp = Blueprint('ajax', __name__, url_prefix='/ajax')
@@ -39,7 +40,7 @@ def location_search(name):
 
 @bp.route('/score/<int:id>/toggle', methods=['POST'])
 def score_toggle(id):
-    user = get_current_user()
+    user = current_user
     message = Message[id]
     upvoted_by_self = (MessageUpvote
             .select()
